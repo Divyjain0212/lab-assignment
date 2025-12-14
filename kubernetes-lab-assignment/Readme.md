@@ -3,15 +3,14 @@
 Step-by-Step Implementation:-
 # Step 1: Create an EC2 instance
 
-Creating an Ubuntu t2.small instance
+Creating an Ubuntu m7i-flex.large instance
 ![aws_instance](images/image-1.png)
 
 # Step 2 — Install the following command in instance
 
 ```bash
-sudo su
-apt update -y
-apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 ```
 
 # Docker installation
@@ -63,6 +62,8 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 
+- Logout and login again (or restart shell) to apply group changes reliably.
+
 ![Docker Running](images/image.png)
 
 # Step 3 — Install Conntrack
@@ -70,7 +71,7 @@ newgrp docker
 conntrack :- In Kubernetes, “conntrack” refers to the Connection Tracking system used for network traffic management within the cluster. Conntrack is a kernel feature that keeps track of network connections and their states. It allows the kernel to maintain information about network connections, such as source IP addresses, destination IP addresses, ports, and connection states (established, closed, etc.)
 
 ```bash
-apt install conntack
+sudo apt install conntack -y
 ```
 
 # Step 4 — Install and run kubectl and minikube in vm
@@ -117,7 +118,7 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
 
 6. From a terminal with administrator access (but not logged in as root), run:
 ```bash
-minikube start
+minikube start --driver=docker
 ```
 
 # Step 5- Clone the git repository
@@ -138,11 +139,19 @@ kubectl get pods
 
 check database and it’s content so go inside the container as , ( password is root ) so we can see the db create from the container
 ```bash
-kubectl exec -it < pod-name > -- /bin/bash
+kubectl exec -it <mysql-pod-name> -- /bin/bash
 mysql -u root -p
 ```
 
 After that exit from the shell also container.
+
+Install Java & Maven
+
+```bash
+sudo apt install openjdk-17-jdk maven -y
+java -version
+mvn -version
+```
 
 # Step 7 — Create an image from Dockerfile
 
@@ -170,9 +179,10 @@ kubectl get svc
 ```
 
 Now go to the database in the server and check the entries done by you in the SQL database.
+(password:root)
 
 ```bash
-kubectl exec -it < pod_name > --  mysql -u root -p
+kubectl exec -it <mysql-pod-name> --  mysql -u root -p
 ```
 
 ![mysql records](images/image-5.png)

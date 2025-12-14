@@ -138,7 +138,7 @@ kubectl get pods
 
 check database and it’s content so go inside the container as , ( password is root ) so we can see the db create from the container
 ```bash
-kubectl exec -it pod/mysql-7b6c47d79-zf4zf -- /bin/bash
+kubectl exec -it < pod-name > -- /bin/bash
 mysql -u root -p
 ```
 
@@ -169,6 +169,14 @@ kubectl get pods
 kubectl get svc
 ```
 
+Now go to the database in the server and check the entries done by you in the SQL database.
+
+```bash
+kubectl exec -it < pod_name > --  mysql -u root -p
+```
+
+![mysql records](images/image-5.png)
+
 # Step 9 - PORT-FORWARDING
 
 Port forwarding is a networking technique used to redirect network traffic from one port on a host to another port on a different host or the same host. In the context of Kubernetes, port forwarding allows you to access services running inside a Kubernetes cluster from your local machine or another remote host.
@@ -189,10 +197,18 @@ minikube dashboard
 ```
 
 ```bash
-http://127.0.0.1:34927/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+http://127.0.0.1:40115/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
 change the IP address to your IP address and port mention as 8001
 
-e.g http://54.190.118.228:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+e.g http://13.200.239.208:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
 ```
 
+![minikube output url](images/image-6.png)
+
 By changing the ip address and port number you can access the k8s resources on dashboard using above link.
+
+if you are unable to access the website then you have to check security inbound rules
+- you have to allow 8001 port
+
+![k8s dashboard](images/image-4.png)
+![minikube dashboard](images/image-3.png)

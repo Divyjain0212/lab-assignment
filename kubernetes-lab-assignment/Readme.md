@@ -210,5 +210,8 @@ By changing the ip address and port number you can access the k8s resources on d
 if you are unable to access the website then you have to check security inbound rules
 - you have to allow 8001 port
 
+![security group](images/image-7.png)
+
 ![k8s dashboard](images/image-4.png)
+
 ![minikube dashboard](images/image-3.png)
